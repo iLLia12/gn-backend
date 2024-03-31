@@ -14,6 +14,13 @@ class Game extends Model implements HasMedia
     use HasTags;
     use InteractsWithMedia;
 
+    public $fillable = [
+        'name',
+        'slug',
+        'description',
+        'year'
+    ];
+
     public function images()
     {
         return $this->media()->where('collection_name', 'images');
