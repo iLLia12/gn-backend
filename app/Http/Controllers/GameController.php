@@ -27,6 +27,7 @@ class GameController extends Controller
         $game = new Game;
         $game->fill($data);
         $game->save();
+        $game->attachTags(['tag4', 'tag5']);
         $game->addMediaFromRequest('images')->toMediaCollection('images');
         return response()->json(["message" => "created"]);
     }

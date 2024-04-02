@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Tag;
+use App\Models\Filter;
 
-class TagController extends Controller
+class FilterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tags = Tag::all();
-        return $tags;
+        return Filter::all();
     }
 
     /**
@@ -62,14 +61,5 @@ class TagController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    /**
-     * Autocomplete
-     */
-    public function autocomplete()
-    {
-        $tags = Tag::all();
-        return $tags;
     }
 }
