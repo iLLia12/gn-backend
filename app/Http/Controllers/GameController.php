@@ -23,12 +23,16 @@ class GameController extends Controller
      */
     public function store(StoreGameRequest $request)
     {
-        $data = $request->except("images");
         $game = new Game;
-        $game->fill($data);
+        $game->fill($request->all());
         $game->save();
         $game->attachTags(['tag4', 'tag5']);
-        $game->addMediaFromRequest('images')->toMediaCollection('images');
+        if($request->fileNames) {
+            $fileNames = explode(".", $request->fileNames);
+            $game->addMultipleMediaFromRequest($fileNames)->each(function ($fileAdder) {
+                $fileAdder->toMediaCollection("images");
+            });
+        }
         return response()->json(["message" => "created"]);
     }
 
