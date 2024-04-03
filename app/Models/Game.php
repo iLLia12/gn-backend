@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use \Spatie\Tags\HasTags;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Game extends Model implements HasMedia
 {
@@ -24,5 +25,10 @@ class Game extends Model implements HasMedia
     public function images()
     {
         return $this->media()->where('collection_name', 'images');
+    }
+
+    public function filters(): MorphToMany
+    {
+        return $this->morphToMany(Filter::class, 'filterable');
     }
 }

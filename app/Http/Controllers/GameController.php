@@ -14,7 +14,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        $games = Game::with('images')->orderBy('created_at', 'desc')->get();
+        $games = Game::with(['images', 'filters'])->orderBy('created_at', 'desc')->get();
         return response()->json($games);
     }
 
@@ -23,9 +23,13 @@ class GameController extends Controller
      */
     public function store(StoreGameRequest $request)
     {
+        Log::info($request->all());
         $game = new Game;
         $game->fill($request->all());
         $game->save();
+        if($request->filters) {
+            $game->filters()->toggle(explode(".", $request->filters));
+        }
         $game->attachTags(['tag4', 'tag5']);
         if($request->fileNames) {
             $fileNames = explode(".", $request->fileNames);
